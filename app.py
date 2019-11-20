@@ -3,7 +3,7 @@ from flask import Flask, abort
 from models.pokemon import Pokemon
 from models.pokedex import Pokedex
 
-app = Flask(__name__)
+app: Flask = Flask(__name__)
 pokedex = Pokedex()
 
 
@@ -26,7 +26,7 @@ def home():
     return "Boulou"
 
 
-@app.route('/pokemon')
+@app.route('/pokemon', strict_slashes=False)
 def list_all():
     return {
         'items': pokedex.serialize()
@@ -51,7 +51,10 @@ def get_by_name(pokemon_name: str):
         return abort(404)
 
 
+@app.before_first_request
+def init_server():
+    generate_pokedex("resources/pokedex.json")
+
 
 if __name__ == '__main__':
-    generate_pokedex("resources/pokedex.json")
     app.run()

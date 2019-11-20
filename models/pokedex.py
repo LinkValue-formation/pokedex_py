@@ -14,4 +14,4 @@ class Pokedex:
         return self.get_by_("name", name)
 
     def serialize(self):
-        return list(map(lambda p: p.serialize(), self.pokemons))
+        return [p.serialize() for p in self.pokemons]
