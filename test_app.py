@@ -20,5 +20,4 @@ def test_home(client):
 def test_get_all_route(client):
     resp = client.get('/pokemon')
     data = json.loads(resp.data)
-    print(data)
-    assert len(data['items']) == 13
+    assert len(data['items']) == 964
